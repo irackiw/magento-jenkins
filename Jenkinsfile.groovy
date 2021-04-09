@@ -1,7 +1,3 @@
-static def getReleaseDir() {
-    return new Date().format('yyyyMMddHHss')
-}
-
 pipeline {
     agent any
 
@@ -59,4 +55,8 @@ pipeline {
             }
         }
     }
+}
+
+def getReleaseDir() {
+    return new Date().format('yyyyMMddHHss')
 }
