@@ -4,8 +4,10 @@ pipeline {
     stages {
         stage('Pull new version') {
             steps {
-                sh("cd /var/www/versions && mkdir $TIMESTAMPS")
-                sh("git pull")
+                sh 'cd /var/www/versions'
+                sh 'ls -l'
+                sh 'cd /var/www/versions && mkdir $TIMESTAMPS'
+//                sh 'git pull'
             }
         }
         stage('Fix permissions') {
