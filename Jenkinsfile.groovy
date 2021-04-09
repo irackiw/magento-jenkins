@@ -8,7 +8,8 @@ pipeline {
     stages {
         stage('Pull new version') {
             steps {
-                script {
+                script {\
+                    echo 'wojtek'
                     echo ${RELEASE_DIR}
                     sh "git clone git@github.com:irackiw/magento.git /var/www/versions/$RELEASE_DIR"
                 }
