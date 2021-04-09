@@ -4,6 +4,8 @@ pipeline {
     stages {
         stage('Pull new version') {
             steps {
+                sh("cd /var/www/versions")
+                sh("mkdir $BUILD_NUMBER")
                 sh("git pull")
             }
         }
