@@ -6,14 +6,15 @@ pipeline {
         stage('Pull new version') {
             steps {
                 script {
-                    sh 'cd /var/www/versions  && git clone git@github.com:irackiw/magento.git 412900'
+                    sh 'cd /var/www/versions  && git clone git@github.com:irackiw/magento.git 413330'
                 }
             }
         }
         stage('Composer install') {
             steps {
                 script {
-                    sh 'cd 412900'
+                    sh 'pwd'
+                    sh 'cd 413330'
                     sh 'composer install'
                     sh 'rm -rf var/.regenerate'
                 }
