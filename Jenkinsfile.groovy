@@ -1,14 +1,18 @@
+static def getReleaseDir() {
+    return new Date().format('yyyyMMddHHss')
+}
+
 pipeline {
     agent any
 
+
     stages {
+        }
         stage('Pull new version') {
             steps {
-                sh 'whoami'
-                sh 'cd /var/www/versions'
-                sh 'ls -l'
-                sh 'cd /var/www/versions && mkdir ${currentBuild.startTimeInMillis}'
-//                sh 'git pull'
+                releaseDir = getReleaseDir()
+                sh 'cd /var/www/versions && mkdir $releaseDir'
+                sh 'git pull '
             }
         }
         stage('Fix permissions') {
@@ -56,4 +60,3 @@ pipeline {
             }
         }
     }
-}
