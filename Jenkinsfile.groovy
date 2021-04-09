@@ -56,7 +56,7 @@ pipeline {
         stage('Change symlinks') {
             steps {
                 sh "if [- f '/var/www/current_magento' ] ; then unlink /var/www/current_magento; fi"
-                sh "ln -s /var/www/versions/${RELEASE_DIR} /var/www/current_magento"
+                sh "ln -s /var/www/versions/${RELEASE_DIR} /var/www/current_magento/magento"
             }
         }
         stage('Magento cache clear') {
