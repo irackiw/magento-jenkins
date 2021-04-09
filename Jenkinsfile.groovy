@@ -1,4 +1,4 @@
-RELEASE_DIR  = getReleaseDir()
+RELEASE_DIR = getReleaseDir()
 
 
 pipeline {
@@ -8,7 +8,13 @@ pipeline {
     stages {
         stage('Pull new version') {
             steps {
-                script {\
+                script {
+
+
+                                                            \
+
+
+
                     echo 'wojtek'
                     echo RELEASE_DIR
                     sh "git clone git@github.com:irackiw/magento.git /var/www/versions/${RELEASE_DIR}"
@@ -51,25 +57,19 @@ pipeline {
         }
         stage('Change symlinks') {
             steps {
-                sh("cd /var/www/versions/${RELEASE_DIR}/ && ls -l ")
+                sh "unlink /var/www/current_magento"
+                sh "ln -s /var/www/versions/${RELEASE_DIR} /var/www/current_magento"
             }
         }
         stage('Magento cache clear') {
             steps {
-                sh("bin/magento cache:clean")
-                sh("bin/magento cache:enable")
+                sh("/var/www/current_magento/bin/magento cache:clean")
+                sh("/var/www/current_magento/bin/magento cache:enable")
             }
         }
         stage('Cloudflare cache clear') {
             steps {
-                echo 'Deploying....'
-            }
-        }
-    }
-    post {
-        always {
-            script{
-             //   sh "rm -rf /var/www/versions/${RELEASE_DIR}"
+                echo 'Deploying finished.'
             }
         }
     }
