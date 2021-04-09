@@ -7,7 +7,7 @@ pipeline {
                 sh 'whoami'
                 sh 'cd /var/www/versions'
                 sh 'ls -l'
-                sh 'cd /var/www/versions && mkdir $TIMESTAMPS'
+                sh 'cd /var/www/versions && mkdir ${currentBuild.startTimeInMillis}'
 //                sh 'git pull'
             }
         }
