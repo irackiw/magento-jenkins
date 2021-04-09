@@ -13,40 +13,35 @@ pipeline {
         stage('Composer install') {
             steps {
                 script {
-                    sh 'cd /var/www/versions/terazzara'
-                    sh 'composer install'
-                    sh 'rm -rf var/.regenerate'
+                    sh 'cd /var/www/versions/terazzara && composer install'
+                    sh 'rm -rf /var/www/versions/terazzara/var/.regenerate'
                 }
             }
         }
         stage('Fix permissions') {
             steps {
                 script {
-                    sh 'cd /var/www/versions/terazzara'
-                    sh 'chmod u+x bin/magento'
+                    sh 'chmod u+x /var/www/versions/terazzara/bin/magento'
                 }
             }
         }
         stage('Setup upgrade') {
             steps {
                 script {
-                    sh 'cd /var/www/versions/terazzara'
-                    sh 'bin/magento maintenance:enable'
-                    sh 'bin/magento setup:upgrade'
-                    sh 'bin/magento maintenance:disable'
+                    sh '/var/www/versions/terazzara/bin/magento maintenance:enable'
+                    sh '/var/www/versions/terazzara/bin/magento setup:upgrade'
+                    sh '/var/www/versions/terazzara/bin/magento maintenance:disable'
                 }
             }
         }
         stage('DI compile') {
             steps {
-                sh 'cd /var/www/versions/terazzara'
-                sh("bin/magento setup:di:compile")
+                sh("/var/www/versions/terazzara/bin/magento setup:di:compile")
             }
         }
         stage('Static content deploy') {
             steps {
-                sh 'cd /var/www/versions/terazzara'
-                sh("bin/magento setup:static-content:deploy")
+                sh("/var/www/versions/terazzara/bin/magento setup:static-content:deploy")
             }
         }
         stage('Change symlinks') {
