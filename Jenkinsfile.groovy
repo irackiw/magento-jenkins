@@ -6,7 +6,7 @@ pipeline {
         stage('Pull new version') {
             steps {
                 script{
-                    sh 'cd /var/www/versions  && git clone git@github.com:irackiw/magento.git:$branch 12312314'
+                    sh 'cd /var/www/versions  && git clone git@github.com:irackiw/magento.git 12312314'
                 }
             }
         }
