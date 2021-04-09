@@ -5,7 +5,7 @@ static def getReleaseDir() {
 pipeline {
     agent any
 
-    String releaseDir = getReleaseDir()
+    def releaseDir = getReleaseDir()
 
     stages {
         stage('Pull new version') {
