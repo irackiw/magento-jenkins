@@ -1,4 +1,7 @@
-RELEASE_DIR = getReleaseDir()
+import java.time.LocalDateTime
+
+final String RELEASE_DIR  = LocalDateTime.now()
+
 
 pipeline {
     agent any
@@ -8,31 +11,32 @@ pipeline {
         stage('Pull new version') {
             steps {
                 script {
-                    sh 'cd /var/www/versions  && git clone git@github.com:irackiw/magento.git ${RELEASE_DIR}'
+                    echo ${RELEASE_DIR}
+                    sh "cd /var/www/versions && git clone git@github.com:irackiw/magento.git $RELEASE_DIR"
                 }
             }
         }
         stage('Composer install') {
             steps {
                 script {
-                    sh 'cd /var/www/versions/${RELEASE_DIR} && composer install'
-                    sh 'rm -rf /var/www/versions/${RELEASE_DIR}/var/.regenerate'
+                    sh "cd /var/www/versions/${RELEASE_DIR} && composer install"
+                    sh "rm -rf /var/www/versions/${RELEASE_DIR}/var/.regenerate"
                 }
             }
         }
         stage('Fix permissions') {
             steps {
                 script {
-                    sh 'chmod u+x /var/www/versions/${RELEASE_DIR}/bin/magento'
+                    sh "chmod u+x /var/www/versions/${RELEASE_DIR}/bin/magento"
                 }
             }
         }
         stage('Setup upgrade') {
             steps {
                 script {
-                    sh '/var/www/versions/${RELEASE_DIR}/bin/magento maintenance:enable'
-                    sh '/var/www/versions/${RELEASE_DIR}/bin/magento setup:upgrade'
-                    sh '/var/www/versions/${RELEASE_DIR}/bin/magento maintenance:disable'
+                    sh "/var/www/versions/${RELEASE_DIR}/bin/magento maintenance:enable"
+                    sh "/var/www/versions/${RELEASE_DIR}/bin/magento setup:upgrade"
+                    sh "/var/www/versions/${RELEASE_DIR}/bin/magento maintenance:disable"
                 }
             }
         }
@@ -73,5 +77,5 @@ pipeline {
 }
 
 def getReleaseDir() {
-    return new Date().format('yyyyMMddHHss')
+    return new Date('yyyyMMddHHss')
 }
