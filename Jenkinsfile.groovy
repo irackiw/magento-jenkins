@@ -11,8 +11,8 @@ pipeline {
             }
         }
         stage('Composer install') {
-            script {
-                steps {
+            steps {
+                script {
                     sh 'cd 12992'
                     sh 'composer install'
                     sh 'rm -rf var/.regenerate'
@@ -20,15 +20,15 @@ pipeline {
             }
         }
         stage('Fix permissions') {
-            script {
-                steps {
+            steps {
+                script {
                     sh 'chmod u+x bin/magento'
                 }
             }
         }
         stage('Setup upgrade') {
-            script {
-                steps {
+            steps {
+                script {
                     sh 'bin/magento maintenance:enable'
                     sh 'bin/magento setup:upgrade'
                     sh 'bin/magento maintenance:disable'
