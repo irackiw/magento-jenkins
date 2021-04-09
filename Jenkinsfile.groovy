@@ -9,14 +9,6 @@ pipeline {
         stage('Pull new version') {
             steps {
                 script {
-
-
-                                                            \
-
-
-
-                    echo 'wojtek'
-                    echo RELEASE_DIR
                     sh "git clone git@github.com:irackiw/magento.git /var/www/versions/${RELEASE_DIR}"
                 }
             }
@@ -33,6 +25,14 @@ pipeline {
             steps {
                 script {
                     sh "chmod u+x /var/www/versions/${RELEASE_DIR}/bin/magento"
+                }
+            }
+        }
+        stage('Copy .env file ') {
+            steps {
+                script {
+                    sh "rm /var/www/versions/${RELEASE_DIR}/app/etc/env.php"
+                    sh "cp /var/www/env.php /var/www/versions/${RELEASE_DIR}/app/etc"
                 }
             }
         }
