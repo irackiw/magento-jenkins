@@ -10,8 +10,8 @@ pipeline {
             steps {
                 script {\
                     echo 'wojtek'
-                    echo ${RELEASE_DIR}
-                    sh "git clone git@github.com:irackiw/magento.git /var/www/versions/$RELEASE_DIR"
+                    echo RELEASE_DIR
+                    sh "git clone git@github.com:irackiw/magento.git /var/www/versions/${RELEASE_DIR}"
                 }
             }
         }
