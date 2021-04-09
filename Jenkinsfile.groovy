@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     echo ${RELEASE_DIR}
-                    sh "cd /var/www/versions && git clone git@github.com:irackiw/magento.git $RELEASE_DIR"
+                    sh "git clone git@github.com:irackiw/magento.git /var/www/versions/$RELEASE_DIR"
                 }
             }
         }
@@ -70,7 +70,7 @@ pipeline {
     post {
         always {
             script{
-                sh 'rm -rf /var/www/versions/terazzara'
+                sh "rm -rf /var/www/versions/${RELEASE_DIR}"
             }
         }
     }
