@@ -6,15 +6,14 @@ pipeline {
         stage('Pull new version') {
             steps {
                 script {
-                    sh 'cd /var/www/versions  && git clone git@github.com:irackiw/magento.git 413330'
+                    sh 'cd /var/www/versions  && git clone git@github.com:irackiw/magento.git terazzara'
                 }
             }
         }
         stage('Composer install') {
             steps {
                 script {
-                    sh 'pwd'
-                    sh 'cd 413330'
+                    sh 'cd /var/www/versions/terazzara'
                     sh 'composer install'
                     sh 'rm -rf var/.regenerate'
                 }
@@ -23,6 +22,7 @@ pipeline {
         stage('Fix permissions') {
             steps {
                 script {
+                    sh 'cd /var/www/versions/terazzara'
                     sh 'chmod u+x bin/magento'
                 }
             }
@@ -30,6 +30,7 @@ pipeline {
         stage('Setup upgrade') {
             steps {
                 script {
+                    sh 'cd /var/www/versions/terazzara'
                     sh 'bin/magento maintenance:enable'
                     sh 'bin/magento setup:upgrade'
                     sh 'bin/magento maintenance:disable'
@@ -38,17 +39,19 @@ pipeline {
         }
         stage('DI compile') {
             steps {
+                sh 'cd /var/www/versions/terazzara'
                 sh("bin/magento setup:di:compile")
             }
         }
         stage('Static content deploy') {
             steps {
+                sh 'cd /var/www/versions/terazzara'
                 sh("bin/magento setup:static-content:deploy")
             }
         }
         stage('Change symlinks') {
             steps {
-                sh("ln -s ")
+                sh("ls -l ")
             }
         }
         stage('Magento cache clear') {
@@ -60,6 +63,13 @@ pipeline {
         stage('Cloudflare cache clear') {
             steps {
                 echo 'Deploying....'
+            }
+        }
+    }
+    post {
+        always {
+            script{
+                sh 'rm -rf /var/www/versions/terazzara'
             }
         }
     }
