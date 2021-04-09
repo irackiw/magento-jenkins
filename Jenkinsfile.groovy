@@ -7,7 +7,6 @@ pipeline {
 
 
     stages {
-        }
         stage('Pull new version') {
             steps {
                 releaseDir = getReleaseDir()
@@ -60,3 +59,4 @@ pipeline {
             }
         }
     }
+}
