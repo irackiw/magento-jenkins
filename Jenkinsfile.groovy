@@ -5,27 +5,34 @@ pipeline {
     stages {
         stage('Pull new version') {
             steps {
-                script{
-                    sh 'cd /var/www/versions  && git clone git@github.com:irackiw/magento.git 12312'
+                script {
+                    sh 'cd /var/www/versions  && git clone git@github.com:irackiw/magento.git 412992'
                 }
             }
         }
         stage('Composer install') {
-            steps {
-                sh("composer install")
-                sh("rm -rf var/.regenerate")
-            }
-        }
-        stage('Setup upgrade') {
-            steps {
-                sh("bin/magento maintenance:enable")
-                sh("bin/magento setup:upgrade")
-                sh("bin/magento maintenance:disable")
+            script {
+                steps {
+                    sh 'cd 12992'
+                    sh 'composer install'
+                    sh 'rm -rf var/.regenerate'
+                }
             }
         }
         stage('Fix permissions') {
-            steps {
-                sh("chmod u+x bin/magento")
+            script {
+                steps {
+                    sh 'chmod u+x bin/magento'
+                }
+            }
+        }
+        stage('Setup upgrade') {
+            script {
+                steps {
+                    sh 'bin/magento maintenance:enable'
+                    sh 'bin/magento setup:upgrade'
+                    sh 'bin/magento maintenance:disable'
+                }
             }
         }
         stage('DI compile') {
