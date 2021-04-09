@@ -10,11 +10,6 @@ pipeline {
                 }
             }
         }
-        stage('Fix permissions') {
-            steps {
-                sh("chmod u+x bin/magento")
-            }
-        }
         stage('Composer install') {
             steps {
                 sh("composer install")
@@ -26,6 +21,11 @@ pipeline {
                 sh("bin/magento maintenance:enable")
                 sh("bin/magento setup:upgrade")
                 sh("bin/magento maintenance:disable")
+            }
+        }
+        stage('Fix permissions') {
+            steps {
+                sh("chmod u+x bin/magento")
             }
         }
         stage('DI compile') {
