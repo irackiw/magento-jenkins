@@ -5,11 +5,11 @@ static def getReleaseDir() {
 pipeline {
     agent any
 
+    String releaseDir = getReleaseDir()
 
     stages {
         stage('Pull new version') {
             steps {
-                String releaseDir = getReleaseDir()
                 sh 'cd /var/www/versions && mkdir $releaseDir'
                 sh 'git pull '
             }
