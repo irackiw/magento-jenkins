@@ -5,9 +5,11 @@ pipeline {
     stages {
         stage('Pull new version') {
             steps {
-                releaseDir = getReleaseDir()
-                sh 'cd /var/www/versions && mkdir $releaseDir'
-                sh 'git pull '
+                script{
+                    releaseDir = getReleaseDir()
+                    sh 'cd /var/www/versions && mkdir $releaseDir'
+                    sh 'git pull'
+                }
             }
         }
         stage('Fix permissions') {
