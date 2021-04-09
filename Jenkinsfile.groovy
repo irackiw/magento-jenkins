@@ -1,6 +1,7 @@
 import java.time.LocalDateTime
+import java.time.LocalTime
 
-final String RELEASE_DIR  = LocalDateTime.now()
+RELEASE_DIR  = LocalDateTime.now()
 
 
 pipeline {
@@ -77,5 +78,5 @@ pipeline {
 }
 
 def getReleaseDir() {
-    return new Date('yyyyMMddHHss')
+    return new Date().format("yyyyMMddhhmmss")
 }
