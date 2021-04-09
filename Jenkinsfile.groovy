@@ -50,7 +50,7 @@ pipeline {
         }
         stage('Static content deploy') {
             steps {
-                sh("/var/www/versions/${RELEASE_DIR}/bin/magento setup:static-content:deploy")
+                sh("/var/www/versions/${RELEASE_DIR}/bin/magento setup:static-content:deploy -f")
             }
         }
         stage('Change symlinks') {
