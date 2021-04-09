@@ -69,7 +69,7 @@ pipeline {
     post {
         always {
             script{
-                sh "rm -rf /var/www/versions/${RELEASE_DIR}"
+             //   sh "rm -rf /var/www/versions/${RELEASE_DIR}"
             }
         }
     }
