@@ -29,7 +29,7 @@ pipeline {
                 }
             }
         }
-        stage('Fix permissions') {
+        stage('Fix bin/magento permissions') {
             steps {
                 script {
                     sh "chmod u+x /var/www/versions/${RELEASE_DIR}/bin/magento"
@@ -39,9 +39,7 @@ pipeline {
         stage('Setup upgrade') {
             steps {
                 script {
-                    sh "/var/www/versions/${RELEASE_DIR}/bin/magento maintenance:enable"
                     sh "/var/www/versions/${RELEASE_DIR}/bin/magento setup:upgrade"
-                    sh "/var/www/versions/${RELEASE_DIR}/bin/magento maintenance:disable"
                 }
             }
         }
