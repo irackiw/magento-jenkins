@@ -1,7 +1,4 @@
-import java.time.LocalDateTime
-import java.time.LocalTime
-
-RELEASE_DIR  = LocalDateTime.now()
+RELEASE_DIR  = getReleaseDir()
 
 
 pipeline {
