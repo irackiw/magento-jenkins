@@ -6,9 +6,7 @@ pipeline {
         stage('Pull new version') {
             steps {
                 script{
-                    releaseDir = getReleaseDir()
-                    sh 'cd /var/www/versions && mkdir $releaseDir'
-                    sh 'git pull'
+                    sh 'cd /var/www/versions  && git clone git@github.com:irackiw/magento.git:$branch 12312314'
                 }
             }
         }
