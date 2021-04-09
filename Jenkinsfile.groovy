@@ -61,13 +61,14 @@ pipeline {
         }
         stage('Magento cache clear') {
             steps {
-                sh("/var/www/current_magento/bin/magento cache:clean")
-                sh("/var/www/current_magento/bin/magento cache:enable")
+                sh("/var/www/current_magento/magento/bin/magento cache:clean")
+                sh("/var/www/current_magento/magento/bin/magento cache:enable")
             }
         }
         stage('Cloudflare cache clear') {
             steps {
                 echo 'Deploying finished.'
+                currentBuild.result = 'SUCCESS'
             }
         }
     }
