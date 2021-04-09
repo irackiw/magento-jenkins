@@ -1,11 +1,11 @@
 pipeline {
     agent any
 
-    def releaseDir = getReleaseDir()
 
     stages {
         stage('Pull new version') {
             steps {
+                releaseDir = getReleaseDir()
                 sh 'cd /var/www/versions && mkdir $releaseDir'
                 sh 'git pull '
             }
