@@ -61,10 +61,7 @@ pipeline {
         }
         stage('Fix permissions') {
             steps {
-                sh "cd /var/www/versions/${RELEASE_DIR} && find . -type f -exec chmod 644 {} \\;"
-                sh "cd /var/www/versions/${RELEASE_DIR} && find . -type d -exec chmod 755 {} \\;"
-                sh "cd /var/www/versions/${RELEASE_DIR} && chown -R www-data:www-data  ."
-                sh "cd /var/www/versions/${RELEASE_DIR} && chmod u+x bin/magento"
+                sh 'sudo /usr/local/bin/fix_permissions.sh'
             }
         }
         stage('Magento cache clear') {
