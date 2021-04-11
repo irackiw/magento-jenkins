@@ -50,7 +50,7 @@ pipeline {
         }
         stage('Static content deploy') {
             steps {
-                sh("/var/www/versions/${RELEASE_DIR}/bin/magento setup:static-content:deploy -f")
+                sh("/var/www/versions/${RELEASE_DIR}/bin/magento setup:static-content:deploy pl_PL -f")
             }
         }
         stage('Change symlinks') {
@@ -61,7 +61,7 @@ pipeline {
         }
         stage('Fix permissions') {
             steps {
-                sh 'sudo /usr/local/bin/fix_permissions.sh'
+                sh "sudo /usr/local/bin/fix_permissions.sh ${RELEASE_DIR}"
             }
         }
         stage('Magento cache clear') {
