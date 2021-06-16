@@ -71,7 +71,7 @@ pipeline {
                 }
             }
         }
-
+        // todo add uploads as symlink from /mnt/s3/shared_prestashop/img to /var/www/current_prestashop/img
         //todo remove old versions on current machine and ssh
     }
 }
