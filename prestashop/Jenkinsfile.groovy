@@ -65,14 +65,39 @@ pipeline {
             steps {
                 script {
                     for (prapIp in PRAPS_IP) {
-                        sh "ssh $PRAP_USER@$prapIp  \"[ -d '/var/www/current_prestashop' ] && unlink /var/www/current_prestashop\" "
-                        sh "ssh $PRAP_USER@$prapIp ln -s /var/www/prestashop_versions/${RELEASE_DIR}/ /var/www/current_prestashop"
+                        sh "ssh $PRAP_USER@$prapIp 'ln -sf /var/www/prestashop_versions/${RELEASE_DIR}/ /var/www/current_prestashop'"
                     }
                 }
             }
         }
-        // todo add uploads as symlink from /mnt/s3/shared_prestashop/img to /var/www/current_prestashop/img
-        //todo remove old versions on current machine and ssh
+        stage('Symlink uploads') {
+            steps {
+                script {
+                    for (prapIp in PRAPS_IP) {
+                        sh "ssh $PRAP_USER@$prapIp ln -s /mnt/s3/shared_prestashop/img /var/www/current_prestashop/img"
+                    }
+                }
+            }
+        }
+        stage('Remove old versions ') {
+            steps {
+                script {
+                    for (prapIp in PRAPS_IP) {
+                        sh "ssh $PRAP_USER@$prapIp 'cd /var/www/prestashop_versions && rm -rf ${RELEASE_COMPRESS}'"
+                        sh "ssh $PRAP_USER@$prapIp 'cd /var/www/prestashop_versions && ls -t | tail -n +4 | xargs -I {} rm -rf {}'"
+                    }
+                }
+            }
+        }
+        stage('Clear locally /tmp') {
+            steps {
+                script {
+                    sh "rm -rf $RELEASE_TMP_PATH"
+                    sh "rm -rf $RELEASE_TMP_COMPRESS_PATH"
+                }
+            }
+        }
+
     }
 }
 
